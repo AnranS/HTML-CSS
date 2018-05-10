@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        div{
+            width: 200px;
+            height: 200px;
+        }
+        #up{
+            /*float: left;*/
+            background: pink;
+        }
+        #down{
+            background: deeppink;
+        }
+    </style>
+</head>
+<body>
+<!--因为浮动只提升半层所以down和浮动后的up在同一层 所以downdown的数字被挤了下来-->
+<div id="up">upupupup</div>
+<div id="down">downdowndowndown</div>
+</body>
+</html>

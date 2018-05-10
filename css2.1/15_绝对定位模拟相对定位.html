@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        /*<!--*/
+        /*怎么使用绝对定位来模拟固定定位*/
+
+        /*1*/
+        /*.禁止系统滚动条*/
+
+        /*2*/
+        /*.将滚动条加给body*/
+
+        /*3*/
+        /*.让body的尺寸变为视口的尺寸*/
+
+        /*-->*/
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            overflow: hidden;
+            height: 100%;
+        }
+
+        body {
+            overflow: auto;
+            height: 100%;
+        }
+
+        #test {
+            position: absolute;
+            left: 50px;
+            top: 50px;
+            width: 100px;
+            height: 100px;
+            background: pink;
+        }
+    </style>
+</head>
+<body>
+<div id="test">
+
+</div>
+<div style="height: 1000px;">
+    csjkahcjk <br/>
+    csjkahcjk <br/>
+    csjkahcjk <br/>
+    csjkahcjk <br/>
+    csjkahcjk <br/>
+    csjkahcjk <br/>
+    csjkahcjk <br/>
+    csjkahcjk <br/>
+</div>
+</body>
+</html>
