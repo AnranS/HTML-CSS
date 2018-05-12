@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--如果一行中有两个或两个以上的块级元素，通过设置块级元素的显示类型为-->
+<!--inline-block和父容器的text-align属性从而使多块级元素水平居中。-->
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    #container{
+        text-align: center;
+    }
+    #container > .inner{
+        width: 200px;
+        height: 200px;
+        background: pink;
+        display: inline-block;
+        margin: 10px;
+    }
+</style>
+<div id="container">
+    <div class="inner"></div>
+    <div class="inner"></div>
+    <div class="inner"></div>
+</div>
+</body>
+</html>

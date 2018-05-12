@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>test</title>
+    <style>
+        .ghost-center {
+            position: relative;
+            border: 2px dashed #f69c55;
+            padding: 10px 0;
+        }
+        .ghost-center::after {
+            content: " ";
+            display: inline-block;
+            height: 100%;
+            width: 2px;
+            vertical-align: middle;
+        }
+        .ghost-center p {
+            display: inline-block;
+            vertical-align: middle;
+            width: 12rem;
+            padding:1rem;
+            background: pink;
+        }
+    </style>
+</head>
+<body>
+<!--在父容器内放一个100%高度的伪元素，让文本和伪元素垂直对齐，从而达到垂直居中的目的。-->
+<div class="ghost-center">
+    <p>伪元素实现垂直居中</p>
+</div>
+</body>
+</html>
+

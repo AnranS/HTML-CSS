@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--利用弹性布局(flex)，实现水平居中，其中justify-content -->
+<!--用于设置弹性盒子元素在主轴（横轴）方向上的对齐方式，本例中设置子元素水平居中显示。-->
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    #container{
+        display: flex;
+        justify-content: center;
+    }
+    #container > .inner{
+        width: 200px;
+        height: 200px;
+        background: pink;
+    }
+</style>
+<div id="container">
+    <div class="inner"></div>
+</div>
+</body>
+</html>
