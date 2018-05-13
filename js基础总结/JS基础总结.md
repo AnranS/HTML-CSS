@@ -1,5 +1,7 @@
 # JS基础总结
 
+[github代码地址](https://github.com/AnranS/HTML-CSS/tree/master/js基础总结)
+
 ## 1、数据类型
 
 ### 1、分类
