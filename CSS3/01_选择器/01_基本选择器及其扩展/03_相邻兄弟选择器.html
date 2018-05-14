@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>相邻兄弟选择器</title>
+    <!--
+        这被称为一个相邻兄弟选择器. 它只会匹配紧跟着的兄弟元素
+        且只会匹配下一个相邻元素
+        紧跟！！！！
+    -->
+    <style type="text/css">
+        #wrap > #first + .inner {
+            color: pink;
+        }
+
+        li + li {
+            font-weight: bold;
+            color: pink;
+        }
+    </style>
+</head>
+<body>
+<div id="wrap">
+<div class="inner">inner</div>
+<div id="first">first</div>
+<!--<div></div>-->
+<div class="inner">inner</div>
+<div class="inner">inner</div>
+<div class="inner">inner</div>
+<div class="inner">inner</div>
+</div>
+<div>
+    <ul>
+        <li>List item 1</li>
+        <li>List item 2</li>
+        <li>List item 3</li>
+    </ul>
+    <ol>
+        <li>List item 1</li>
+        <li>List item 2</li>
+        <li>List item 3</li>
+    </ol>
+</div>
+</body>
+</html>
