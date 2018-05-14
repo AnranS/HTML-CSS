@@ -4,6 +4,8 @@ typora-root-url: ./img
 
 # JS函数高级
 
+[代码github地址](https://github.com/AnranS/HTML-CSS/tree/master/JS函数高级)
+
 ## 1、原型与原型链
 
 ### 1、原型(prototype)
@@ -307,6 +309,7 @@ typora-root-url: ./img
 - 在执行全局代码之前将window确定为全局执行上下文
 - 对全局数据进行预处理
   - var定义的全局变量==>undefined，添加为window的方法
+  - function声明的全局函数==>赋值(fun), 添加为window的方法
   - this==>赋值（window）
 - 开始执行全局代码
 
@@ -604,5 +607,252 @@ typora-root-url: ./img
 
 ![m2](img/m2.png)
 
+## 4、闭包
 
+### 1、理解闭包
+
+#### 1、如何产生闭包
+
+- 当一个嵌套的内部(子)函数引用了嵌套的外部(父)函数的变量(函数)时，就会产生闭包
+
+#### 2、什么是闭包
+
+- 使用Chrome调试查看
+- 理解一:闭包是嵌套的内部函数（大部分认为）
+- 理解二:包含被引用变量(函数)的对象(少数)
+- **闭包存在于嵌套的内部函数中
+
+```javascript
+  function fn1 () {
+    var a = 2
+    function fn2 () { //执行函数定义就会产生闭包(不用调用内部函数)
+      console.log(a)
+    }
+  }
+  fn1()
+```
+
+我们一起来看闭包在哪里
+
+![闭包](img/闭包.png)
+
+#### 4、产生闭包的条件
+
+- 函数嵌套
+- 内部函数引用了外部函数的数据(变量/函数)
+
+
+
+### 2、常见的闭包调用
+
+#### 1、将函数作为另一个函数的返回值
+
+```javascript
+  function fn1() {
+    var a = 2
+    function fn2() {
+      a++
+      console.log(a)
+    }
+    return fn2
+  }
+  var f = fn1()
+  f() // 3
+  f() // 4
+```
+
+#### 2、将函数作为实参传递给另一个函数调用
+
+```javascript
+  function showDelay(msg, time) {
+    setTimeout(function () {
+      alert(msg)
+    }, time)
+  }
+  showDelay('atguigu', 2000)
+```
+
+### 3、闭包的作用
+
+- 使函数内的变量在函数执行完毕之后，仍然存活在内存中（延长局部变量的生命周期）
+- 让函数外部可以操作（读写）到函数内部的数据（变量/函数）
+- 函数执行完后, 函数内部声明的局部变量是否还存在?
+  - 一般是不存在, 存在于闭包中的变量才可能存在
+- 在函数外部能直接访问函数内部的局部变量吗?
+  - 不能, 但可以通过闭包让外部操作它
+
+### 4、闭包的生命周期
+
+- 产生：在嵌套内部函数定义执行完时就产生了（不是在调用）
+- 死亡：在嵌套的内部函数成为垃圾对象时
+
+```javascript
+  function fn1() {
+    //此时闭包就已经产生了(函数提升, 内部函数对象已经创建了)
+    var a = 2
+    function fn2 () {
+      a++
+      console.log(a)
+    }
+    return fn2
+  }
+  var f = fn1()
+  f() // 3
+  f() // 4
+  f = null //闭包死亡(包含闭包的函数对象成为垃圾对象)
+```
+
+### 5、闭包应用之自定义js模块
+
+- 具有特定功能的js文件
+- 将所有的数据和功能封装在一个函数内部(私有的)
+- 只向外暴露一个包含n个私有方法的对象或函数
+- 模块的使用者，只需要通过模块暴露的对象调用方法来实现对应的功能
+
+实现方式1
+
+myMoudle1.js
+
+```javascript
+function myModule() {
+  //私有数据
+  var msg = 'My atguigu'
+  //操作数据的函数
+  function doSomething() {
+    console.log('doSomething() '+msg.toUpperCase())
+  }
+  function doOtherthing () {
+    console.log('doOtherthing() '+msg.toLowerCase())
+  }
+
+  //向外暴露对象(给外部使用的方法)
+  return {
+    doSomething: doSomething,
+    doOtherthing: doOtherthing
+  }
+}
+```
+
+```html
+<script type="text/javascript" src="myModule.js"></script>
+<script type="text/javascript">
+  var module = myModule()
+  module.doSomething()
+  module.doOtherthing()
+</script>
+```
+
+实现方式2
+
+myMoudle2.js
+
+```javascript
+(function () {
+  //私有数据
+  var msg = 'My atguigu'
+  //操作数据的函数
+  function doSomething() {
+    console.log('doSomething() '+msg.toUpperCase())
+  }
+  function doOtherthing () {
+    console.log('doOtherthing() '+msg.toLowerCase())
+  }
+
+  //向外暴露对象(给外部使用的方法)
+  window.myModule2 = {
+    doSomething: doSomething,
+    doOtherthing: doOtherthing
+  }
+})()
+```
+
+调用
+
+```html
+<script type="text/javascript" src="myModule2.js"></script>
+<script type="text/javascript">
+  myModule2.doSomething()
+  myModule2.doOtherthing()
+</script>
+```
+
+### 6、闭包的缺点及解决办法
+
+- 缺点
+  - 函数执行完后，函数内的局部变量没有释放，占用内存时间过长
+  - 容易造成内存泄露
+- 解决
+  - 能不用闭包就不用闭包
+  - 及时释放 ****
+
+例子
+
+```javascript
+  function fn1() {
+    var arr = new Array[100000]
+    function fn2() {
+      console.log(arr.length)
+    }
+    return fn2
+  }
+  var f = fn1()
+  f()
+
+  f = null //让内部函数成为垃圾对象-->回收闭包
+```
+
+### 7、面试题
+
+#### 面试题1
+
+```javascript
+  //代码片段一
+  var name = "The Window";
+  var object = {
+    name : "My Object",
+    getNameFunc : function(){
+      return function(){
+        return this.name;
+      };
+    }
+  };
+  alert(object.getNameFunc()());  //the window
+
+
+  //代码片段二
+  var name2 = "The Window";
+  var object2 = {
+    name2 : "My Object",
+    getNameFunc : function(){
+      var that = this;
+      return function(){
+        return that.name2;
+      };
+    }
+  };
+  alert(object2.getNameFunc()()); //my object
+```
+
+#### 恶心恶心
+
+```javascript
+function fun(n,o) {
+  console.log(o)
+  return {
+    fun:function(m){
+      return fun(m,n)
+    }
+  }
+}
+var a = fun(0)
+a.fun(1)
+a.fun(2)
+a.fun(3)//undefined,0,0,0
+
+var b = fun(0).fun(1).fun(2).fun(3)//undefined,0,1,2
+
+var c = fun(0).fun(1)
+c.fun(2)
+c.fun(3)//undefined,0,1,1
+```
 
